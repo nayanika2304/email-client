@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -10,15 +10,13 @@ export class InputComponent implements OnInit {
   @Input() label: string;
   @Input() control: FormControl;
   @Input() inputType: string;
-  constructor() { }
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
-  // tslint:disable-next-line:typedef
-  showErrors(){
-    const {dirty, touched, errors} = this.control;
+  ngOnInit() {}
+
+  showErrors() {
+    const { dirty, touched, errors } = this.control;
     return dirty && touched && errors;
   }
-
 }

@@ -1,15 +1,15 @@
-import {FormGroup, Validator} from '@angular/forms';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Validator, FormGroup } from '@angular/forms';
 
-@Injectable({providedIn: 'root'})
-export class MatchPassword implements Validator{
-  // tslint:disable-next-line:typedef
-  validate(formGroup: FormGroup){
-    const {password, passwordConfirmation} = formGroup.value;
-    if (password === passwordConfirmation){
+@Injectable({ providedIn: 'root' })
+export class MatchPassword implements Validator {
+  validate(formGroup: FormGroup) {
+    const { password, passwordConfirmation } = formGroup.value;
+
+    if (password === passwordConfirmation) {
       return null;
-    }else{
-      return {passwordsDontMatch: true};
+    } else {
+      return { passwordsDontMatch: true };
     }
   }
 }
