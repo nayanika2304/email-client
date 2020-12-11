@@ -1,4 +1,3 @@
-// @ts-ignore
 import { AuthValidators } from './auth-validators';
 
 describe('AuthValidators', () => {
