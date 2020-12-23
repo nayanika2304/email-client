@@ -2,7 +2,7 @@ export interface Email {
   id: string;
   subject: string;
   from: string;
-  test: string;
+  text: string;
   to: string;
   html: string;
 }
