@@ -13,21 +13,21 @@ interface SignupCredentials {
   passwordConfirmation: string;
 }
 
-interface SigninCredentials {
-  username: string;
-  password: string;
-}
-
 interface SignupResponse {
-  username: string;
-}
-
-interface SigninResponse {
   username: string;
 }
 
 interface SignedinResponse {
   authenticated: boolean;
+  username: string;
+}
+
+interface SigninCredentials {
+  username: string;
+  password: string;
+}
+
+interface SigninResponse {
   username: string;
 }
 
@@ -37,7 +37,8 @@ interface SignedinResponse {
 export class AuthService {
   rootUrl = 'https://api.angular-email.com';
   signedin$ = new BehaviorSubject(null);
-  username: string;
+  username = '';
+
   constructor(private http: HttpClient) {}
 
   usernameAvailable(username: string) {
@@ -53,9 +54,9 @@ export class AuthService {
     return this.http
       .post<SignupResponse>(`${this.rootUrl}/auth/signup`, credentials)
       .pipe(
-        tap(({username}) => {
-          this.username = username;
+        tap(({ username }) => {
           this.signedin$.next(true);
+          this.username = username;
         })
       );
   }
@@ -65,27 +66,27 @@ export class AuthService {
       .get<SignedinResponse>(`${this.rootUrl}/auth/signedin`)
       .pipe(
         tap(({ authenticated, username }) => {
-          this.username =  username;
           this.signedin$.next(authenticated);
+          this.username = username;
         })
       );
   }
 
-  signout(){
-    return this.http.post(`${this.rootUrl}/auth/signout`, {})
-      .pipe(
-        tap(()  => {
-          this.signedin$.next(false);
-        })
-      );
+  signout() {
+    return this.http.post(`${this.rootUrl}/auth/signout`, {}).pipe(
+      tap(() => {
+        this.signedin$.next(false);
+      })
+    );
   }
 
   signin(credentials: SigninCredentials) {
-    return this.http.post<SigninResponse>(`${this.rootUrl}/auth/signin`, credentials)
+    return this.http
+      .post<SigninResponse>(`${this.rootUrl}/auth/signin`, credentials)
       .pipe(
-        tap(({username}) => {
-          this.username = username;
+        tap(({ username }) => {
           this.signedin$.next(true);
+          this.username = username;
         })
       );
   }

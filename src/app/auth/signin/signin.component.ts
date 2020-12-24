@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {AuthService} from '../auth.service';
-import {Router} from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -16,31 +16,31 @@ export class SigninComponent implements OnInit {
       Validators.maxLength(20),
       Validators.pattern(/^[a-z0-9]+$/)
     ]),
-    password: new FormControl('',[
+    password: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
-      Validators.maxLength(20)])
+      Validators.maxLength(20)
+    ])
   });
-  constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit(){
-    if (this.authForm.invalid){
+  ngOnInit() {}
+
+  onSubmit() {
+    if (this.authForm.invalid) {
       return;
     }
+
     this.authService.signin(this.authForm.value).subscribe({
-      next: response => {
-        // Navigate to some other route
-        this.router.navigateByUrl('/inbox')
+      next: () => {
+        this.router.navigateByUrl('/inbox');
       },
-        error: ({error}) => {
-        if (error.username || error.password){
-          this.authForm.setErrors({credentials: true});
+      error: ({ error }) => {
+        if (error.username || error.password) {
+          this.authForm.setErrors({ credentials: true });
         }
       }
     });
   }
-
 }

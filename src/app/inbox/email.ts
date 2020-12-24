@@ -1,8 +1,8 @@
 export interface Email {
   id: string;
   subject: string;
-  from: string;
   text: string;
   to: string;
+  from: string;
   html: string;
 }
